@@ -8,12 +8,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
-  ScrollView,
   AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
 import { Actions } from 'react-native-router-flux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // Consts and Libs
 import { AppStyles } from '@theme/';
@@ -204,7 +204,7 @@ class AuthForm extends Component {
         this.setState({ resultMsg: { status: 'One moment...' } });
 
         // Scroll to top, to show message
-        if (this.scrollView) this.scrollView.scrollTo({ y: 0 });
+        if (this.scrollView) this.scrollView.scrollToPosition(0, 0, true);
 
         if (this.props.submit) {
           this.props.submit(formData).then(() => {
@@ -244,7 +244,7 @@ class AuthForm extends Component {
     const Form = FormValidation.form.Form;
 
     return (
-      <ScrollView
+      <KeyboardAwareScrollView
         automaticallyAdjustContentInsets={false}
         ref={(a) => { this.scrollView = a; }}
         style={[AppStyles.container]}
@@ -303,7 +303,7 @@ class AuthForm extends Component {
         </Card>
 
         <Spacer size={60} />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

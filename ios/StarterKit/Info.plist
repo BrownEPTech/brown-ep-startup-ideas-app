@@ -35,6 +35,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To upload a photo or logo when creating a new submission.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To upload a photo or logo when creating a new submission.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

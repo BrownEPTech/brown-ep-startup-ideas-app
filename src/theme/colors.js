@@ -13,8 +13,8 @@ const app = {
 
 const brownEPTheme = {
   brownEPTheme: {
-    red1: '#FC3F58',
-    red2: '#FE374F',
+    lightRed: '#FC3F58',
+    intenseRed: '#FE374F',
   },
 };
 

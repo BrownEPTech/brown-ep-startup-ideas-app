@@ -48,6 +48,7 @@ class CustomFormInput extends Component {
         fontFamily: AppFonts.base.family,
         paddingHorizontal: 0,
         paddingVertical: 3,
+        width: '100%',
       }],
     };
 

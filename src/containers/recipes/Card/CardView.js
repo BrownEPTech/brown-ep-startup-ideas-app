@@ -34,7 +34,7 @@ class RecipeCard extends Component {
   static componentName = 'RecipeCard';
 
   static propTypes = {
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     onPress: PropTypes.func,
@@ -46,6 +46,7 @@ class RecipeCard extends Component {
     onPress: null,
     onPressFavourite: null,
     isFavourite: null,
+    image: null,
   }
 
   render = () => {
@@ -53,7 +54,7 @@ class RecipeCard extends Component {
 
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-        <Card image={image && { uri: image }}>
+        <Card image={image && image !== '' && { uri: image }}>
           <View style={[AppStyles.paddingBottomSml]}>
             <Text h3>{title}</Text>
             <Text>{description}</Text>

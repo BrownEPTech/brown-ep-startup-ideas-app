@@ -24,11 +24,16 @@ class CustomCard extends Component {
       PropTypes.array,
       PropTypes.shape({}),
     ]),
+    imageStyle: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.shape({}),
+    ]),
   }
 
   static defaultProps = {
     containerStyle: [],
     titleStyle: [],
+    imageStyle: [],
   }
 
   cardProps = () => {
@@ -47,6 +52,9 @@ class CustomCard extends Component {
         AppStyles.h2,
         { marginBottom: 15 },
       ],
+      imageStyle: [{
+        backgroundColor: '#FFF',
+      }],
     };
 
     if (this.props.containerStyle) {
@@ -55,6 +63,10 @@ class CustomCard extends Component {
 
     if (this.props.titleStyle) {
       props.titleStyle.push(this.props.titleStyle);
+    }
+
+    if (this.props.imageStyle) {
+      props.titleStyle.push(this.props.imageStyle);
     }
 
     return props;

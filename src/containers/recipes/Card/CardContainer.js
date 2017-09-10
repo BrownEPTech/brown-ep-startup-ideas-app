@@ -25,6 +25,7 @@ const mapStateToProps = state => ({
 // Any actions to map to the component?
 const mapDispatchToProps = {
   replaceFavourites: RecipeActions.replaceFavourites,
+  updateFavoriteCount: RecipeActions.updateFavoriteCount,
 };
 
 /* Component ==================================================================== */
@@ -32,14 +33,22 @@ class RecipeCard extends Component {
   static componentName = 'RecipeCard';
 
   static propTypes = {
-    recipe: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      image: PropTypes.string,
-    }).isRequired,
+    recipe: PropTypes.oneOfType([
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string,
+        description: PropTypes.string,
+        image: PropTypes.string,
+      }),
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string,
+        description: PropTypes.string,
+      }),
+    ]).isRequired,
     replaceFavourites: PropTypes.func.isRequired,
-    favourites: PropTypes.arrayOf(PropTypes.number),
+    updateFavoriteCount: PropTypes.func.isRequired,
+    favourites: PropTypes.arrayOf(PropTypes.string),
     user: PropTypes.shape({
       uid: PropTypes.string,
     }),
@@ -84,8 +93,10 @@ class RecipeCard extends Component {
         // Toggle to/from current list
         if (this.isFavourite()) {
           favs.splice(favs.indexOf(this.props.recipe.id), 1);
+          this.props.updateFavoriteCount(recipeId, -1);
         } else {
           favs.push(recipeId);
+          this.props.updateFavoriteCount(recipeId, 1);
         }
 
         // Send new list to API

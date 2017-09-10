@@ -18,9 +18,10 @@ import { NavbarMenuButton } from '@containers/ui/NavbarMenuButton/NavbarMenuButt
 // Scenes
 import Placeholder from '@components/general/Placeholder';
 import Error from '@components/general/Error';
-import StyleGuide from '@containers/StyleGuideView';
+import StyleGuide from '@containers/StyleGuideContainer';
 import Recipes from '@containers/recipes/Browse/BrowseContainer';
-import RecipeView from '@containers/recipes/RecipeView';
+import RecipeView from '@containers/recipes/RecipeContainer';
+import AddItemForm from '@containers/recipes/Add/AddContainer';
 
 const navbarPropsTabs = {
   ...AppConfig.navbarProps,
@@ -37,14 +38,14 @@ const scenes = (
     <Scene
       {...navbarPropsTabs}
       key={'recipes'}
-      title={'Explore Ideas'}
+      title={'Explore Projects and Ideas'}
       icon={props => TabIcon({ ...props, icon: 'apps' })}
     >
       <Scene
         {...navbarPropsTabs}
         key={'recipesListing'}
         component={Recipes}
-        title={'Explore Ideas'}
+        title={'Explore Projects and Ideas'}
         analyticsDesc={'Recipes: Browse Recipes'}
       />
       <Scene
@@ -59,8 +60,8 @@ const scenes = (
     <Scene
       key={'timeline'}
       {...navbarPropsTabs}
-      title={'Add a New Idea'}
-      component={Placeholder}
+      title={'Add a New Project or Idea'}
+      component={AddItemForm}
       icon={props => TabIcon({ ...props, icon: 'add' })}
       analyticsDesc={'Placeholder: Coming Soon'}
     />
@@ -77,7 +78,7 @@ const scenes = (
     <Scene
       key={'styleGuide'}
       {...navbarPropsTabs}
-      title={'Style Guide'}
+      title={'My Projects and Ideas'}
       component={StyleGuide}
       icon={props => TabIcon({ ...props, icon: 'account-circle' })}
       analyticsDesc={'StyleGuide: Style Guide'}

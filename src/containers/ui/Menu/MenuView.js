@@ -150,12 +150,10 @@ class Menu extends Component {
   render = () => (
     <View style={[styles.container]}>
       <View style={[styles.backgroundFill]} />
-
       <View style={[styles.menuContainer]}>
         <View style={[styles.menu]}>{this.menuList()}</View>
-
-        <View style={[styles.menuBottom]}>
-          {this.props.user && this.props.user.email ?
+        {(this.props.user && this.props.user.email) &&
+          <View style={[styles.menuBottom]}>
             <View>
               <Text
                 style={[
@@ -173,12 +171,8 @@ class Menu extends Component {
                 <Button small title={'Log Out'} onPress={this.logout} />
               </View>
             </View>
-          :
-            <View style={[AppStyles.paddingHorizontal, AppStyles.paddingVerticalSml]}>
-              <Button small title={'Log In'} onPress={() => this.onPress(Actions.login)} />
-            </View>
-          }
-        </View>
+          </View>
+        }
       </View>
     </View>
   )
