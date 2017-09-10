@@ -35,7 +35,7 @@ class RecipeCard extends Component {
     recipe: PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
       image: PropTypes.string,
     }).isRequired,
     replaceFavourites: PropTypes.func.isRequired,
@@ -117,7 +117,7 @@ class RecipeCard extends Component {
     return (
       <RecipeCardRender
         title={recipe.title}
-        body={recipe.body}
+        description={recipe.description}
         image={recipe.image}
         onPress={this.onPressCard}
         onPressFavourite={(user && user.uid) ? this.onPressFavourite : null}

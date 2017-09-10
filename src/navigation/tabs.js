@@ -37,21 +37,21 @@ const scenes = (
     <Scene
       {...navbarPropsTabs}
       key={'recipes'}
-      title={'Recipes'}
-      icon={props => TabIcon({ ...props, icon: 'search' })}
+      title={'Explore Ideas'}
+      icon={props => TabIcon({ ...props, icon: 'apps' })}
     >
       <Scene
         {...navbarPropsTabs}
         key={'recipesListing'}
         component={Recipes}
-        title={'Recipes'}
+        title={'Explore Ideas'}
         analyticsDesc={'Recipes: Browse Recipes'}
       />
       <Scene
         {...AppConfig.navbarProps}
         key={'recipeView'}
         component={RecipeView}
-        getTitle={props => ((props.title) ? props.title : 'View Recipe')}
+        getTitle={props => ((props.title) ? props.title : 'View Idea')}
         analyticsDesc={'RecipeView: View Recipe'}
       />
     </Scene>
@@ -59,27 +59,27 @@ const scenes = (
     <Scene
       key={'timeline'}
       {...navbarPropsTabs}
-      title={'Coming Soon'}
+      title={'Add a New Idea'}
       component={Placeholder}
-      icon={props => TabIcon({ ...props, icon: 'timeline' })}
+      icon={props => TabIcon({ ...props, icon: 'add' })}
       analyticsDesc={'Placeholder: Coming Soon'}
     />
 
-    <Scene
+    {/*<Scene
       key={'error'}
       {...navbarPropsTabs}
       title={'Example Error'}
       component={Error}
       icon={props => TabIcon({ ...props, icon: 'error' })}
       analyticsDesc={'Error: Example Error'}
-    />
+    />*/}
 
     <Scene
       key={'styleGuide'}
       {...navbarPropsTabs}
       title={'Style Guide'}
       component={StyleGuide}
-      icon={props => TabIcon({ ...props, icon: 'speaker-notes' })}
+      icon={props => TabIcon({ ...props, icon: 'account-circle' })}
       analyticsDesc={'StyleGuide: Style Guide'}
     />
   </Scene>

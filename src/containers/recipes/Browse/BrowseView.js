@@ -18,7 +18,7 @@ import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import { AppColors } from '@theme/';
 
 // Containers
-import RecipeListing from '@containers/recipes/Listing/ListingContainer';
+import MealListing from '@containers/recipes/Listing/ListingContainer';
 
 // Components
 import { Text } from '@ui/';
@@ -146,7 +146,7 @@ class RecipeTabs extends Component {
     // Which component should be loaded?
     return (
       <View style={styles.tabContainer}>
-        <RecipeListing
+        <MealListing
           meal={route.id}
         />
       </View>

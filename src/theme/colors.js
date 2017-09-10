@@ -11,9 +11,16 @@ const app = {
   listItemBackground: '#FFFFFF',
 };
 
+const brownEPTheme = {
+  brownEPTheme: {
+    red1: '#FC3F58',
+    red2: '#FE374F',
+  },
+};
+
 const brand = {
   brand: {
-    primary: '#0E4EF8',
+    primary: '#FE374F',
     secondary: '#17233D',
   },
 };
@@ -39,6 +46,7 @@ const tabbar = {
 
 export default {
   ...app,
+  ...brownEPTheme,
   ...brand,
   ...text,
   ...borders,

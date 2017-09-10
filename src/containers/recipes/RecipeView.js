@@ -8,6 +8,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
+  email as sendEmail,
+  text as sendText,
+  web as openLink } from 'react-native-communications';
+import {
   View,
   Image,
   ScrollView,
@@ -15,20 +19,10 @@ import {
 } from 'react-native';
 
 // Consts and Libs
-import { AppStyles, AppSizes } from '@theme/';
+import { AppColors, AppStyles, AppSizes } from '@theme/';
 
 // Components
-import { Card, Spacer, Text } from '@ui/';
-
-/* Styles ==================================================================== */
-const styles = StyleSheet.create({
-  featuredImage: {
-    left: 0,
-    right: 0,
-    height: AppSizes.screen.height * 0.2,
-    resizeMode: 'cover',
-  },
-});
+import { Button, Card, Spacer, Text } from '@ui/';
 
 /* Component ==================================================================== */
 class RecipeView extends Component {
@@ -36,13 +30,30 @@ class RecipeView extends Component {
 
   static propTypes = {
     recipe: PropTypes.shape({
-      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      information: PropTypes.string,
+      contactEmail: PropTypes.string,
+      contactPhone: PropTypes.string,
+      contactWebsite: PropTypes.string,
       image: PropTypes.string,
-      ingredients: PropTypes.arrayOf(PropTypes.string),
-      method: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
+  }
+
+  state = {
+    imageHeight: 0,
+  }
+
+  componentDidMount = () => {
+    const { image } = this.props.recipe;
+    if (image && image !== '') {
+      Image.getSize(image, (width, height) => {
+        this.setState({
+          imageHeight: Math.min(AppSizes.screen.width * (height / width),
+            AppSizes.screen.height * 0.4),
+        });
+      });
+    }
   }
 
   /**
@@ -90,7 +101,16 @@ class RecipeView extends Component {
   }
 
   render = () => {
-    const { title, body, image, ingredients, method } = this.props.recipe;
+    const { title, description, image, information, contactEmail,
+      contactPhone, contactWebsite } = this.props.recipe;
+    const styles = StyleSheet.create({
+      featuredImage: {
+        left: 0,
+        right: 0,
+        height: this.state.imageHeight,
+        resizeMode: 'cover',
+      },
+    });
 
     return (
       <ScrollView style={[AppStyles.container]}>
@@ -102,25 +122,48 @@ class RecipeView extends Component {
         }
 
         <Card>
-          <Text h2>{title.rendered}</Text>
-          <Text>{body}</Text>
+          <Text h1>{title}</Text>
+          <Text>{description}</Text>
         </Card>
 
-        {ingredients ?
+        {information &&
           <Card>
-            <Text h2>Ingredients</Text>
-            {this.renderIngredients(ingredients)}
+            <Text h2>Information</Text>
+            <Text>{information}</Text>
           </Card>
-        : null}
+        }
 
-        {method ?
+        {(contactEmail || contactPhone || contactWebsite) &&
           <Card>
-            <Text h2>Method</Text>
-            {this.renderMethod(method)}
-          </Card>
-        : null}
+            <Text h2>Contact</Text>
+            {contactEmail && <Button
+              title={contactEmail}
+              backgroundColor={AppColors.brownEPTheme.red1}
+              icon={{ name: 'email' }}
+              onPress={() => sendEmail(contactEmail, null, null, null, null)}
+            />
+            }
+            {(contactEmail && (contactPhone || contactWebsite)) && <Spacer size={5} />}
 
-        <Spacer size={20} />
+            {contactPhone && <Button
+              title={contactPhone}
+              backgroundColor={AppColors.brownEPTheme.red1}
+              icon={{ name: 'phone' }}
+              onPress={() => sendText(contactPhone)}
+            />}
+
+            {(contactPhone && contactWebsite) && <Spacer size={5} />}
+
+            {contactWebsite && <Button
+              title={contactWebsite.replace(/^https?:\/\//i, '').replace(/\/$/, '')}
+              backgroundColor={AppColors.brownEPTheme.red1}
+              icon={{ name: 'computer' }}
+              onPress={() => openLink(/^https?:\/\//i.test(contactWebsite) ? contactWebsite : `http://${contactWebsite}`)}
+            />}
+          </Card>
+        }
+
+        <Spacer size={60} />
       </ScrollView>
     );
   }

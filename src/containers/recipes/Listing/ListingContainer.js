@@ -45,18 +45,43 @@ class MealListing extends Component {
     recipes: [],
   }
 
-  componentDidMount = () => this.getThisMealsRecipes(this.props.recipes);
-  componentWillReceiveProps = props => this.getThisMealsRecipes(props.recipes);
+  componentDidMount = () => this.getSortedItemsForTab(this.props.recipes);
+  componentWillReceiveProps = props => this.getSortedItemsForTab(props.recipes);
 
   /**
     * Pick out recipes that are in the current meal
     * And hide loading state
     */
-  getThisMealsRecipes = (allRecipes) => {
+  // getThisMealsRecipes = (allRecipes) => {
+  //   console.log('meal recipes called');
+  //   if (allRecipes.length > 0) {
+  //     const recipes = allRecipes.filter(recipe =>
+  //       recipe.category.toString() === this.props.meal.toString(),
+  //     );
+  //
+  //     this.setState({
+  //       recipes,
+  //       loading: false,
+  //     });
+  //   }
+  // }
+
+  getSortedItemsForTab = (allRecipes) => {
     if (allRecipes.length > 0) {
-      const recipes = allRecipes.filter(recipe =>
-        recipe.category.toString() === this.props.meal.toString(),
-      );
+      const recipes = allRecipes.slice(0);
+      if (this.props.meal === '1') {
+        // popular
+        recipes.sort((item1, item2) =>
+          item2.numFavorites - item1.numFavorites,
+        );
+      } else if (this.props.meal === '2') {
+        // latest
+        recipes.sort((item1, item2) =>
+          item2.createdOn - item1.createdOn,
+        );
+      } else {
+        throw new Error('invalid tab');
+      }
 
       this.setState({
         recipes,
