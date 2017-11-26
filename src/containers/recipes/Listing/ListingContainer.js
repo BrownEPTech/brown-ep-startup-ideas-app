@@ -19,6 +19,8 @@ import RecipeListingRender from './ListingView';
 // What data from the store shall we send to the component?
 const mapStateToProps = state => ({
   recipes: state.recipe.recipes || [],
+  user: state.user,
+  favourites: (state.recipe && state.recipe.favourites) ? state.recipe.favourites : null,
 });
 
 // Any actions to map to the component?
@@ -34,10 +36,16 @@ class MealListing extends Component {
     recipes: PropTypes.arrayOf(PropTypes.object),
     meal: PropTypes.string.isRequired,
     getRecipes: PropTypes.func.isRequired,
+    user: PropTypes.shape({
+      uid: PropTypes.string,
+    }),
+    favourites: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
     recipes: [],
+    user: null,
+    favourites: null,
   }
 
   state = {
@@ -45,8 +53,8 @@ class MealListing extends Component {
     recipes: [],
   }
 
-  componentDidMount = () => this.getSortedItemsForTab(this.props.recipes);
-  componentWillReceiveProps = props => this.getSortedItemsForTab(props.recipes);
+  componentDidMount = () => this.getItemsForTab(this.props.recipes);
+  componentWillReceiveProps = props => this.getItemsForTab(props.recipes);
 
   /**
     * Pick out recipes that are in the current meal
@@ -66,9 +74,9 @@ class MealListing extends Component {
   //   }
   // }
 
-  getSortedItemsForTab = (allRecipes) => {
+  getItemsForTab = (allRecipes) => {
     if (allRecipes.length > 0) {
-      const recipes = allRecipes.slice(0);
+      let recipes = allRecipes.slice(0);
       if (this.props.meal === '1') {
         // popular
         recipes.sort((item1, item2) =>
@@ -78,6 +86,15 @@ class MealListing extends Component {
         // latest
         recipes.sort((item1, item2) =>
           item2.createdOn - item1.createdOn,
+        );
+      } else if (this.props.meal === 'myIdeas') {
+        recipes = allRecipes.filter(recipe =>
+          this.props.user && this.props.user.uid === recipe.user,
+        );
+      } else if (this.props.meal === 'myFavs') {
+        recipes = allRecipes.filter(recipe =>
+          // true,
+          this.props.favourites && this.props.favourites.indexOf(recipe.id) > -1,
         );
       } else {
         throw new Error('invalid tab');

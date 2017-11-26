@@ -22,6 +22,8 @@ import StyleGuide from '@containers/StyleGuideContainer';
 import Recipes from '@containers/recipes/Browse/BrowseContainer';
 import RecipeView from '@containers/recipes/RecipeContainer';
 import AddItemForm from '@containers/recipes/Add/AddContainer';
+import MySubmissions from '@containers/recipes/MySubmissions/MySubmissionsView';
+import MyFavorites from '@containers/recipes/MyFavorites/MyFavoritesView';
 
 const navbarPropsTabs = {
   ...AppConfig.navbarProps,
@@ -74,15 +76,34 @@ const scenes = (
       icon={props => TabIcon({ ...props, icon: 'error' })}
       analyticsDesc={'Error: Example Error'}
     />*/}
-
     <Scene
-      key={'styleGuide'}
       {...navbarPropsTabs}
+      key={'manageIdeas'}
       title={'My Projects and Ideas'}
-      component={StyleGuide}
       icon={props => TabIcon({ ...props, icon: 'account-circle' })}
-      analyticsDesc={'StyleGuide: Style Guide'}
-    />
+    >
+      <Scene
+        key={'styleGuide'}
+        {...navbarPropsTabs}
+        title={'My Projects and Ideas'}
+        component={StyleGuide}
+        analyticsDesc={'My Ideas: Manage Ideas'}
+      />
+      <Scene
+        key={'mySubmissions'}
+        {...navbarPropsTabs}
+        title={'My Submissions'}
+        component={MySubmissions}
+        analyticsDesc={'My Submissions: Manage Submissions'}
+      />
+      <Scene
+        key={'myFavorites'}
+        {...navbarPropsTabs}
+        title={'My Favorites'}
+        component={MyFavorites}
+        analyticsDesc={'My Favorites: See Favorites'}
+      />
+    </Scene>
   </Scene>
 );
 

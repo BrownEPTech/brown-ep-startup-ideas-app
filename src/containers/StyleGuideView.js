@@ -88,7 +88,7 @@ class StyleGuide extends Component {
   renderRow = (data, sectionID) => (
     <ListItem
       key={`list-row-${sectionID}`}
-      onPress={Actions.comingSoon}
+      onPress={data.title === 'My Submissions' ? Actions.mySubmissions : Actions.myFavorites}
       title={data.title}
       subtitle={data.role || null}
       leftIcon={data.icon ? { name: data.icon } : null}
