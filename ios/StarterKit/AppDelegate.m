@@ -12,6 +12,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+@import Firebase;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -40,6 +42,8 @@
   launchScreenView.frame = self.window.bounds;
   launchScreenView.contentMode = UIViewContentModeScaleAspectFill;
   rootView.loadingView = launchScreenView;
+  
+  [FIRApp configure];
   
   return YES;
 }
